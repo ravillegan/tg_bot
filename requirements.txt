@@ -3,9 +3,6 @@ asn1crypto
 asyncio
 install
 motor
-datetime
-random
 path
-os
 pathlib2
 pymorphy2
