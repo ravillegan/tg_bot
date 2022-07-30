@@ -75,7 +75,17 @@ async def start(message: types.Message):
 #reg
 @dp.message_handler(commands=['reg'])
 async def start(message: types.Message):
-    status = await add_user(message.chat.id, message.from_user.username)
+    if message.from_user.username == None and (message.from_user.first_name is not None and message.from_user.second_name is not None):
+        user_id = message.from_user.first_name + ' ' + message.from_user.last_name
+    elif if message.from_user.username == None and (message.from_user.first_name is None and message.from_user.second_name is not None):
+        user_id = message.from_user.last_name
+    elif message.from_user.username == None and (message.from_user.first_name is not None and message.from_user.second_name is None):
+        user_id = message.from_user.first_name
+    elif message.from_user.username == None and (message.from_user.first_name is None and message.from_user.second_name is None):
+        user_id = 'Таинственный очкошник ' + message.from_user.id
+    else:
+        user_id = message.from_user.username
+    status = await add_user(message.chat.id, user_id)
     if status == 'already':
         await bot.send_message(message.chat.id, 'Так ты же уже играешь')
     else:
@@ -123,7 +133,7 @@ async def start(message: types.Message):
             await bot.send_message(message.chat.id, 'очкошник дня - @'+login)
             await update_user(message.chat.id, login)
 
-#reg
+#stats
 @dp.message_handler(commands=['stats'])
 async def start(message: types.Message):
     status_stats = await statistics(message.chat.id)
