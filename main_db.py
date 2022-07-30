@@ -75,7 +75,7 @@ async def statistics(chat_id):
         print(document)
         stats_str += str(i+1)+ '. '+document['user_name']
         stats_str += ': '
-        stats_str += document['score']
+        stats_str += str(document['score'])
         stats_str += '\n'
         i+=1
     return stats_str
