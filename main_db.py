@@ -68,7 +68,7 @@ async def statistics(chat_id):
     stats_str = []
     cursor = users_collection.find({'chat_id': str(chat_id)}).sort('score', -1)
     cursor1 = users_collection.find()
-    print(cursor, cursor1, 'blyat', str(chat_id))
+    print(cursor, cursor1, 'blyat', str(chat_id), users_collection.count_documents({'chat_id': {'$eq': str(chat_id)}}))
     i = 0
     for document in await cursor.to_list(length=1000):
         stats_str += str(i+1)+ '. '+document.user_name
