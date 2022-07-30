@@ -56,7 +56,7 @@ async def set_ochko_day(chat_id, user_id):
         user_id_doc = await day_ochko_collection.find_one({'chat_id': {'$eq': str(chat_id)}})
         user_id = user_id_doc['user_id']
         return user_id, 'already'
-    await day_ochko_collection.update_one({'chat_id': str(chat_id), 'user_id' : user_id}, {'$set': {'date': str(datetime.now().date())}})
+    await day_ochko_collection.update_one({'chat_id': str(chat_id)}, {'$set': {'user_id' : user_id, 'date': str(datetime.now().date())}})
     return user_id, 'new'
 
 async def Sort_Tuple(tup):
