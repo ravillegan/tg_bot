@@ -2,6 +2,11 @@ aiogram
 asn1crypto
 asyncio
 install
+motor
+datetime
+logging
+random
 path
+os
 pathlib2
 pymorphy2
