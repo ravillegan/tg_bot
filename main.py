@@ -80,7 +80,7 @@ async def statistics(chat_id):
     cursor = users_collection.find({'chat_id': {'$eq': str(chat_id)}}).sort('score')
     print(cursor, 'blyat')
     for document in await cursor.to_list(length=10):
-        pprint.pprint(document)
+        print(document)
     return stats_str
 
 async def user_info(user_info_json):
