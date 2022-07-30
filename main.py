@@ -11,7 +11,7 @@ TOKEN = os.getenv('BOT_TOKEN')
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot)
 
-cluster = motor.motor_asyncio.AsyncIOMotorClient("mongodb+srv://raville_ganiev:07089910Rg@cluster0.5giudi4.mongodb.net/?retryWrites=true&w=majority")
+cluster = motor.motor_asyncio.AsyncIOMotorClient("mongodb+srv://raville_ganiev:07089910Rgu@cluster0.5giudi4.mongodb.net/?retryWrites=true&w=majority")
 users_collection = cluster.ochkoshniki.ochkoshniki_day_status
 day_ochko_collection = cluster.ochkoshniki.ochkoshniki_users
 
