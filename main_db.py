@@ -125,6 +125,7 @@ async def start(message: types.Message):
         user_name_doc = await users_collection.find_one({'chat_id': {'$eq': str(message.chat.id)}, 'user_id': {'$eq': str(user_id)}})
         user_name = user_name_doc['user_name']
         if new_old == 'already':
+            print(user_id, message.from_user.id, 'vot_tut')
             if message.from_user.id == user_id:
                 rand_reg = randint(0, 1)
                 if rand_reg == 0:
