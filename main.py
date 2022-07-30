@@ -26,11 +26,11 @@ async def add_user(chat_id, user_id, user_name):
             return 'already'
     if chat_id not in list(users.keys()):
         users[chat_id] = {user_id: {user_name: 0}}
-        users_collection.insert_one({chat_id : {user_id: {user_name: 0}}})
+        users_collection.insert_one({str(chat_id) : {str(user_id): {user_name: 0}}})
         print(users_collection)
         return 'new'
     users[chat_id][user_id]= {user_name: 0}
-    users_collection.insert_one({chat_id : {user_id: {user_name: 0}}})
+    users_collection.insert_one({str(chat_id) : {str(user_id): {user_name: 0}}})
     print(users_collection)
     return 'new'
 
