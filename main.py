@@ -5,6 +5,7 @@ from datetime import datetime
 import random
 import logging
 import os
+from random import randint
 
 TOKEN = os.getenv('BOT_TOKEN')
 bot = Bot(token=TOKEN)
@@ -77,7 +78,15 @@ async def start(message: types.Message):
     if status == 'already':
         await bot.send_message(message.chat.id, 'Так ты же уже играешь')
     else:
-        await bot.send_message(message.chat.id, 'Ох. Ты вступил на скользкий путь, ну ладно, ты в игре')
+        rand_reg = randint(0, 3)
+            if rand_reg == 0:
+                await bot.send_message(message.chat.id, 'Подумой не играй! Хотя ладно, твой выбор')
+            if rand_reg == 1:
+                await bot.send_message(message.chat.id, 'Ох. Ты ступил на скользкий путь, ну ладно, ты в игре')
+            if rand_reg == 2:
+                await bot.send_message(message.chat.id, 'Ты играешь с огнем, но мне пох, играй')
+            if rand_reg == 3:
+                await bot.send_message(message.chat.id, 'Обратного пути не будет, ты по любому станешь очкошником')
 
 #kto
 @dp.message_handler(commands=['kto'])
@@ -90,8 +99,19 @@ async def start(message: types.Message):
         if new_old == 'already':
             await bot.send_message(message.chat.id, 'Сегодня же уже выясняли... очкошник дня - @'+login)
         else:
-            await bot.send_message(message.chat.id, 'Зряяя. Ну ладно')
-            await bot.send_message(message.chat.id, 'Очкошник дня - @'+login)
+            if message.from_user.username == login:
+                await bot.send_message(message.chat.id, 'Ты зачем спрашиваешь? Ты и есть очкошник сегодня')
+            else:
+                rand = randint(0, 3)
+                if rand == 0:
+                    await bot.send_message(message.chat.id, 'Делать нечего?. Ну ладно, щас выясним')
+                if rand == 1:
+                    await bot.send_message(message.chat.id, 'Ууу съука. Пахнет очкошничеством, а значит...')
+                if rand == 2:
+                    await bot.send_message(message.chat.id, 'Падажжи. Так, очкошник кто?')
+                if rand == 3:
+                    await bot.send_message(message.chat.id, 'Ща проанализирую. Логарифм хуе мое, делим... ага')
+            await bot.send_message(message.chat.id, 'очкошник дня - @'+login)
             await update_user(message.chat.id, login)
 
 #reg
