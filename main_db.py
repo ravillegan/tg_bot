@@ -32,7 +32,7 @@ async def add_user(chat_id, user_id, user_name):
 async def update_user(chat_id, user_id):
     info = await users_collection.find_one({'chat_id': str(chat_id), 'user_id': str(user_id)})
     new_score = int(info['score']) + 1
-    await users_collection.update_one({'chat_id': str(chat_id), 'user_id': str(user_id)}, {'score': str(new_score)})
+    await users_collection.update_one({'chat_id': str(chat_id), 'user_id': str(user_id)}, {'$set': {'score': str(new_score)}})
 
 async def random_user(chat_id):
     if await users_collection.count_documents({'chat_id': {'$eq': str(chat_id)}}) == 0:
@@ -136,11 +136,11 @@ async def start(message: types.Message):
                 await bot.send_message(message.chat.id, 'Мне не впадлу, я еще раз могу написать, что сегодняшний очкошник - @'+user_name)
         else:
             if message.from_user.id == user_id:
-                await bot.send_message(message.chat.id, 'Ты зачем спрашиваешь? Ты и есть очкошник сегодня')
+                await bot.send_message(message.chat.id, 'Ну раз спросил, то ты очкошник сегодня')
             else:
                 rand = randint(0, 3)
                 if rand == 0:
-                    await bot.send_message(message.chat.id, 'Делать нечего?. Ну ладно, щас выясним')
+                    await bot.send_message(message.chat.id, 'Делать нечего? Ну ладно, щас выясним')
                 if rand == 1:
                     await bot.send_message(message.chat.id, 'Ууу съука. Пахнет очкошничеством, а значит...')
                 if rand == 2:
