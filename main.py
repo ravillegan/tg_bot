@@ -23,7 +23,7 @@ async def add_user(chat_id, user_id, user_name):
     if chat_id not in list(users.keys()):
         users[chat_id] = {user_id: {user_name: 0}}
         return 'new'
-    users[chat_id][user_id][user_name] = 0
+    users[chat_id][user_id]= {user_name: 0}
     return 'new'
 
 async def update_user(chat_id, user_id):
