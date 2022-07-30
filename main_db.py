@@ -160,7 +160,7 @@ async def start(message: types.Message):
                 if rand == 3:
                     await bot.send_message(message.chat.id, 'Ща проанализирую. Логарифм хуе мое, делим... ага')
             await bot.send_message(message.chat.id, 'очкошник дня - @'+user_name)
-            await update_user(message.chat.id, user_id, user_name)
+            await update_user(message.chat.id, user_id)
 
 #stats
 @dp.message_handler(commands=['stats'])
