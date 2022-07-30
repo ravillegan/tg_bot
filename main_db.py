@@ -24,58 +24,57 @@ async def add_user(chat_id, user_id, user_name):
     if await users_collection.count_documents({'chat_id': {'$eq': str(chat_id)}, 'user_id': {'$eq': str(user_id)}}) != 0:
         return 'already'
     if await users_collection.count_documents({'chat_id': {'$eq': str(chat_id)}}) == 0:
-        await users_collection.insert_one({'chat_id': str(chat_id), 'user_id': str(user_id), 'useer_name' : user_name, 'score': 0})
+        await users_collection.insert_one({'chat_id': str(chat_id), 'user_id': str(user_id), 'user_name' : user_name, 'score': 0})
         return 'new'
-    await users_collection.insert_one({'chat_id': str(chat_id), 'user_id': str(user_id), 'useer_name' : user_name, 'score': 0})
-    print(users_collection)
+    await users_collection.insert_one({'chat_id': str(chat_id), 'user_id': str(user_id), 'user_name' : user_name, 'score': 0})
+    # print(users_collection)
     return 'new'
 
-async def update_user(chat_id, user_id, user_name):
-    users[chat_id][user_id][user_name] += 1
+async def update_user(chat_id, user_id):
+    info = await users_collection.find_one({'chat_id': str(chat_id), 'user_id': str(user_id)})
+    new_score = info.score + 1
+    print(users_collection, new_score)
 
 async def random_user(chat_id):
-    if chat_id not in list(users.keys()):
+    if await users_collection.count_documents({'chat_id': {'$eq': str(chat_id)}}) == 0:
         return 'no_one'
-    tmp = list(users[chat_id].keys())
+    cursor = await users_collection.find({'chat_id': {'$eq': str(chat_id)}})
+    print(cursor)
+    tmp = []
+    for document in await cursor.to_list(length=1000):
+        tmp.append(document.user_name)
     random.shuffle(tmp)
     user_id = tmp[0]
     return user_id
 
 
 async def set_ochko_day(chat_id, user_id):
-    if chat_id not in in_day_ochko:
-        in_day_ochko[chat_id] = [datetime.now().date(), user_id]
-        return in_day_ochko[chat_id][1], 'new'
-    if in_day_ochko[chat_id][0] == datetime.now().date():
-        return in_day_ochko[chat_id][1], 'already'
-    return in_day_ochko[chat_id][1], 'new'
+    if await day_ochko_collection.count_documents({'chat_id': {'$eq': str(chat_id)}}) == 0:
+        await day_ochko_collection.insert_one({'chat_id': str(chat_id), 'date': str(datetime.now().date()), 'user_name' : user_id})
+        return user_id, 'new'
+    if await users_collection.find({'chat_id': {'$eq': str(chat_id)}}).date == str(datetime.now().date()):
+        user_id = users_collection.find({'user_id': {'$eq': str(user_id)}}).date
+        return user_id, 'already'
+    await day_ochko_collection.update_one({'chat_id': str(chat_id), 'user_name' : user_id}, {'$set': {'date': str(datetime.now().date())}})
+    return user_id, 'new'
 
 async def Sort_Tuple(tup):
     tup.sort(key = lambda x: x[1], reverse=True)
     return tup
 
 async def statistics(chat_id):
-    if chat_id not in list(users.keys()):
+    if await users_collection.count_documents({'chat_id': {'$eq': str(chat_id)}}) == 0:
         return 'no_chat_id'
-    array = []
-    list_of_tuples = list(users[chat_id].items())
-    print(list_of_tuples)
-    for i in range(len(list_of_tuples)):
-        array.append(list(list_of_tuples[i][1].items()))
-    flat_list = [item for sublist in array for item in sublist]
-    print(flat_list)
-    new_tuple = await Sort_Tuple(flat_list)
-    print(new_tuple)
-    stats_str = ''
-    for i in range(len(new_tuple)):
-        stats_str += str(i+1)+ '. '+new_tuple[i][0]
-        stats_str += ': '
-        stats_str += str(new_tuple[i][1])
-        stats_str += '\n'
-    cursor = users_collection.find({'chat_id': {'$eq': str(chat_id)}}).sort('score')
+    stats_str = []
+    cursor = users_collection.find({'chat_id': {'$eq': str(chat_id)}}).sort('score', -1)
     print(cursor, 'blyat')
+    i = 0
     for document in await cursor.to_list(length=10):
-        print(document)
+        stats_str += str(i+1)+ '. '+document.user_name
+        stats_str += ': '
+        stats_str += document.score
+        stats_str += '\n'
+        i+=1
     return stats_str
 
 async def user_info(user_info_json):
@@ -124,16 +123,17 @@ async def start(message: types.Message):
         await bot.send_message(message.chat.id, 'Никто из вас еще не играет(( Хочешь играть - зарегайся /reg')
     else:
         user_id, new_old = await set_ochko_day(message.chat.id, user_id)
+        user_name = await users_collection.find({'chat_id': {'$eq': str(message.chat.id)}, 'user_id': {'$eq': str(user_id)}}).date
         if new_old == 'already':
             rand_reg = randint(0, 3)
             if rand_reg == 0:
                 await bot.send_message(message.chat.id, 'Читать не умеешь? Я же сегодня писал уже.')
             if rand_reg == 1:
-                await bot.send_message(message.chat.id, 'Сегодня же уже выясняли... очкошник дня - @'+list(users[message.chat.id][user_id].keys())[0])
+                await bot.send_message(message.chat.id, 'Сегодня же уже выясняли... очкошник дня - @'+user_name)
             if rand_reg == 2:
-                await bot.send_message(message.chat.id, 'Ну епта, выяснили же уже, что за очкошничество сегодня отвечает @'+list(users[message.chat.id][user_id].keys())[0])
+                await bot.send_message(message.chat.id, 'Ну епта, выяснили же уже, что за очкошничество сегодня отвечает @'+user_name)
             if rand_reg == 3:
-                await bot.send_message(message.chat.id, 'Мне не впадлу, я еще раз могу написать, что сегодняшний очкошник - @'+list(users[message.chat.id][user_id].keys())[0])
+                await bot.send_message(message.chat.id, 'Мне не впадлу, я еще раз могу написать, что сегодняшний очкошник - @'+user_name)
         else:
             if message.from_user.id == user_id:
                 await bot.send_message(message.chat.id, 'Ты зачем спрашиваешь? Ты и есть очкошник сегодня')
@@ -147,8 +147,8 @@ async def start(message: types.Message):
                     await bot.send_message(message.chat.id, 'Падажжи. Так, очкошник кто?')
                 if rand == 3:
                     await bot.send_message(message.chat.id, 'Ща проанализирую. Логарифм хуе мое, делим... ага')
-            await bot.send_message(message.chat.id, 'очкошник дня - @'+list(users[message.chat.id][user_id].keys())[0])
-            await update_user(message.chat.id, user_id, list(users[message.chat.id][user_id].keys())[0])
+            await bot.send_message(message.chat.id, 'очкошник дня - @'+user_name)
+            await update_user(message.chat.id, user_id, user_name)
 
 #stats
 @dp.message_handler(commands=['stats'])
