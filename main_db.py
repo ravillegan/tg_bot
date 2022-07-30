@@ -53,7 +53,8 @@ async def set_ochko_day(chat_id, user_id):
     if await day_ochko_collection.count_documents({'chat_id': {'$eq': str(chat_id)}}) == 0:
         await day_ochko_collection.insert_one({'chat_id': str(chat_id), 'date': str(datetime.now().date()), 'user_name' : user_id})
         return user_id, 'new'
-    date_db = users_collection.find_one({'chat_id': {'$eq': str(chat_id)}})
+    date_db = await users_collection.find_one({'chat_id': {'$eq': str(chat_id)}})
+    print(date_db)
     if str(date_db['date']) == str(datetime.now().date()):
         user_id_doc = users_collection.find({'date': {'$eq': str(datetime.now().date())}})
         user_id = user_id_doc['user_id']
