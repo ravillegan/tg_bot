@@ -1,6 +1,4 @@
 aiogram
-anaconda-navigator
-anaconda-project
 argh
 asn1crypto
 astropy
@@ -14,11 +12,6 @@ boto
 bottleneck
 brotlipy
 colorama
-conda-build
-conda-package-handling
-conda-repo-cli
-conda-token
-conda-verify
 contextlib2
 cython
 cytoolz
@@ -35,8 +28,6 @@ html5lib
 importlib-metadata
 install
 jdcal
-jupyter
-jupyterlab
 klecks-module
 lxml
 mkl-fft
