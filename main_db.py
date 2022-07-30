@@ -66,7 +66,7 @@ async def Sort_Tuple(tup):
 async def statistics(chat_id):
     if await users_collection.count_documents({'chat_id': {'$eq': str(chat_id)}}) == 0:
         return 'no_chat_id'
-    stats_str = []
+    stats_str = ''
     # cursor = users_collection.find({'chat_id': str(chat_id)}).sort('score', -1)
     # cursor1 = users_collection.find()
     # print(cursor, cursor1, 'blyat', str(chat_id), users_collection.count_documents({'chat_id': {'$eq': str(chat_id)}}))
@@ -78,6 +78,7 @@ async def statistics(chat_id):
         stats_str += str(document['score'])
         stats_str += '\n'
         i+=1
+        print(stats_str)
     return stats_str
  
 async def user_info(user_info_json):
