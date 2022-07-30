@@ -37,6 +37,7 @@ async def random_user(chat_id):
     login = tmp[0]
     return login
 
+
 async def set_ochko_day(chat_id, login):
     if chat_id not in in_day_ochko:
         in_day_ochko[chat_id] = [datetime.now().date(), login]
@@ -130,6 +131,11 @@ async def start(message: types.Message):
         await bot.send_message(message.chat.id, 'Ни одной игры не было')
     else:
         await bot.send_message(message.chat.id, 'Топ очкошников: \n \n'+ status_stats)
+
+#secret
+@dp.message_handler(commands=['secret'])
+async def start(message: types.Message):
+    await bot.send_message(message.chat.id, message.from_user)
 
 
 # webhook settings
