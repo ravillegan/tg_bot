@@ -68,7 +68,7 @@ async def statistics(chat_id):
 #start
 @dp.message_handler(commands=['start'])
 async def start(message: types.Message):
-    await bot.send_message(message.chat.id, 'Ну и зря вы это начали... Ну ладно, пограем в очкошника')
+    await bot.send_message(message.chat.id, 'Ну и зря вы это начали... Ну ладно, поиграем в очкошника')
 
 #reg
 @dp.message_handler(commands=['reg'])
