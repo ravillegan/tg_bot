@@ -126,7 +126,7 @@ async def start(message: types.Message):
         user_name = user_name_doc['user_name']
         if new_old == 'already':
             print(message.from_user.id, user_id_new, 'vot_tut')
-            if str(message.from_user.id == user_id_new):
+            if str(message.from_user.id) == user_id_new:
                 rand_reg = randint(0, 1)
                 if rand_reg == 0:
                     await bot.send_message(message.chat.id, 'У меня где то была бумажка за сегодня')
