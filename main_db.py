@@ -32,7 +32,8 @@ async def add_user(chat_id, user_id, user_name):
 
 async def update_user(chat_id, user_id):
     info = await users_collection.find_one({'chat_id': str(chat_id), 'user_id': str(user_id)})
-    new_score = info.score + 1
+    new_score = int(info.score) + 1
+    await users_collection.update_one({'chat_id': str(chat_id), 'user_id': str(user_id)}, {'score': str(new_score)})
     # print(users_collection, new_score)
 
 async def random_user(chat_id):
@@ -66,11 +67,11 @@ async def statistics(chat_id):
     if await users_collection.count_documents({'chat_id': {'$eq': str(chat_id)}}) == 0:
         return 'no_chat_id'
     stats_str = []
-    cursor = users_collection.find({'chat_id': str(chat_id)}).sort('score', -1)
+    # cursor = users_collection.find({'chat_id': str(chat_id)}).sort('score', -1)
     # cursor1 = users_collection.find()
     # print(cursor, cursor1, 'blyat', str(chat_id), users_collection.count_documents({'chat_id': {'$eq': str(chat_id)}}))
     i = 0
-    async for document in await cursor.to_list(length=1000):
+    async for document in await users_collection.find({'chat_id': str(chat_id)}).sort('score', -1):
         stats_str += str(i+1)+ '. '+document.user_name
         stats_str += ': '
         stats_str += document.score
