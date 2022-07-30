@@ -131,7 +131,8 @@ async def start(message: types.Message):
         await bot.send_message(message.chat.id, 'Никто из вас еще не играет(( Хочешь играть - зарегайся /reg')
     else:
         user_id, new_old = await set_ochko_day(message.chat.id, user_id)
-        user_name = await users_collection.find({'chat_id': {'$eq': str(message.chat.id)}, 'user_id': {'$eq': str(user_id)}}).date
+        user_name = await users_collection.find({'chat_id': {'$eq': str(message.chat.id)}, 'user_id': {'$eq': str(user_id)}})
+        user_name = user_name['user_name']
         if new_old == 'already':
             rand_reg = randint(0, 3)
             if rand_reg == 0:
