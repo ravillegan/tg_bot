@@ -1,4 +1,5 @@
-from aiogram import Bot, Dispatcher, executor, types, start_webhook
+from aiogram import Bot, Dispatcher, executor, types
+from aiogram.utils.executor import start_webhook
 import motor.motor_asyncio
 from datetime import datetime
 import random
