@@ -159,4 +159,4 @@ if __name__ == '__main__':
         port=WEBAPP_PORT,
     )
 
-executor.start_polling(dp)
+# executor.start_polling(dp)
