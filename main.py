@@ -30,6 +30,8 @@ async def add_user(chat_id, user_id, user_name):
         print(users_collection)
         return 'new'
     users[chat_id][user_id]= {user_name: 0}
+    users_collection.insert_one({chat_id : {user_id: {user_name: 0}}})
+    print(users_collection)
     return 'new'
 
 async def update_user(chat_id, user_id, user_name):
