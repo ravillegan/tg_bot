@@ -69,7 +69,10 @@ async def statistics(chat_id):
     stats_str = ''
     i = 0
     async for document in users_collection.find({'chat_id': str(chat_id)}).sort('score', -1):
-        stats_str += str(i+1)+ '. '+document['user_name']
+        if document['user_name'][0] == ' ':
+            stats_str += str(i+1)+ '. '+document['user_name'][1:]
+        else:
+            stats_str += str(i+1)+ '. '+document['user_name']
         stats_str += ': '
         stats_str += str(document['score'])
         stats_str += '\n'
