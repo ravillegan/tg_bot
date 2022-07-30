@@ -32,7 +32,7 @@ async def add_user(chat_id, user_id, user_name):
 
 async def update_user(chat_id, user_id):
     info = await users_collection.find_one({'chat_id': str(chat_id), 'user_id': str(user_id)})
-    new_score = int(info.score) + 1
+    new_score = int(info['score']) + 1
     await users_collection.update_one({'chat_id': str(chat_id), 'user_id': str(user_id)}, {'score': str(new_score)})
     # print(users_collection, new_score)
 
@@ -53,7 +53,7 @@ async def set_ochko_day(chat_id, user_id):
     if await day_ochko_collection.count_documents({'chat_id': {'$eq': str(chat_id)}}) == 0:
         await day_ochko_collection.insert_one({'chat_id': str(chat_id), 'date': str(datetime.now().date()), 'user_name' : user_id})
         return user_id, 'new'
-    if await users_collection.find({'chat_id': {'$eq': str(chat_id)}})['date'] == str(datetime.now().date()):
+    if await users_collection.find_one({'chat_id': {'$eq': str(chat_id)}})['date'] == str(datetime.now().date()):
         user_id = users_collection.find({'user_id': {'$eq': str(user_id)}})['date']
         return user_id, 'already'
     await day_ochko_collection.update_one({'chat_id': str(chat_id), 'user_name' : user_id}, {'$set': {'date': str(datetime.now().date())}})
