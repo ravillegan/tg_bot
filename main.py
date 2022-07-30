@@ -12,8 +12,8 @@ bot = Bot(token=TOKEN)
 dp = Dispatcher(bot)
 
 cluster = motor.motor_asyncio.AsyncIOMotorClient("mongodb+srv://raville_ganiev:07089910Rgu@cluster0.5giudi4.mongodb.net/?retryWrites=true&w=majority")
-users_collection = cluster.ochkoshniki.ochkoshniki_day_status
-day_ochko_collection = cluster.ochkoshniki.ochkoshniki_users
+users_collection = cluster.ochkoshniki.ochkoshniki_users
+day_ochko_collection = cluster.ochkoshniki.ochkoshniki_day_status
 
 HEROKU_APP_NAME = os.getenv('HEROKU_APP_NAME')
 
@@ -26,7 +26,7 @@ async def add_user(chat_id, user_id, user_name):
             return 'already'
     if chat_id not in list(users.keys()):
         users[chat_id] = {user_id: {user_name: 0}}
-        users_collection.insert_one({str(chat_id) : {str(user_id): {user_name: 0}}})
+        users_collection[chat_id].insert_one(str(user_id) : {user_name: 0})
         print(users_collection)
         return 'new'
     users[chat_id][user_id]= {user_name: 0}
