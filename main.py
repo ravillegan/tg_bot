@@ -78,7 +78,7 @@ async def statistics(chat_id):
         stats_str += str(new_tuple[i][1])
         stats_str += '\n'
     cursor = users_collection.find({'chat_id': {'$eq': chat_id}}).sort('score')
-    print(cursor)
+    print(cursor, 'blyat')
     for document in await cursor.to_list(length=10):
         pprint.pprint(document)
     return stats_str
