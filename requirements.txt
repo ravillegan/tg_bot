@@ -32,7 +32,6 @@ more-itertools
 motor
 multipledispatch
 mypy-extensions
-nltk
 nose
 numba
 olefile
