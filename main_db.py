@@ -125,15 +125,25 @@ async def start(message: types.Message):
         user_name_doc = await users_collection.find_one({'chat_id': {'$eq': str(message.chat.id)}, 'user_id': {'$eq': str(user_id)}})
         user_name = user_name_doc['user_name']
         if new_old == 'already':
-            rand_reg = randint(0, 3)
-            if rand_reg == 0:
-                await bot.send_message(message.chat.id, 'Читать не умеешь? Я же сегодня писал уже.')
-            if rand_reg == 1:
-                await bot.send_message(message.chat.id, 'Сегодня же уже выясняли... очкошник дня - @'+user_name)
-            if rand_reg == 2:
-                await bot.send_message(message.chat.id, 'Ну епта, выяснили же уже, что за очкошничество сегодня отвечает @'+user_name)
-            if rand_reg == 3:
-                await bot.send_message(message.chat.id, 'Мне не впадлу, я еще раз могу написать, что сегодняшний очкошник - @'+user_name)
+            if message.from_user.id == user_id:
+                rand_reg = randint(0, 1)
+                if rand_reg == 0:
+                    await bot.send_message(message.chat.id, 'У меня где то была бумажка за сегодня')
+                    await bot.send_message(message.chat.id, 'О, нашел, тут кстати твое имя')
+                    await bot.send_message(message.chat.id, 'Читаю: "очкошник дня - @'+user_name+'"')
+                else:
+                    await bot.send_message(message.chat.id, 'Забыл? Ты и есть очкошник дня. На всякий случай еще раз')
+                    await bot.send_message(message.chat.id, 'очкошник дня с признаками деменции - @'+user_name)
+            else:
+                rand_reg = randint(0, 3)
+                if rand_reg == 0:
+                    await bot.send_message(message.chat.id, 'Читать не умеешь? Я же сегодня писал уже.')
+                if rand_reg == 1:
+                    await bot.send_message(message.chat.id, 'Сегодня же уже выясняли... очкошник дня - @'+user_name)
+                if rand_reg == 2:
+                    await bot.send_message(message.chat.id, 'Ну епта, выяснили же уже, что за очкошничество сегодня отвечает @'+user_name)
+                if rand_reg == 3:
+                    await bot.send_message(message.chat.id, 'Мне не впадлу, я еще раз могу написать, что сегодняшний очкошник - @'+user_name)
         else:
             if message.from_user.id == user_id:
                 await bot.send_message(message.chat.id, 'Ну раз спросил, то ты очкошник сегодня')
