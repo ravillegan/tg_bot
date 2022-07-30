@@ -94,7 +94,7 @@ async def start(message: types.Message):
 @dp.message_handler(commands=['reg'])
 async def start(message: types.Message):
     user_name = await user_info(message.from_user)
-    status = await add_user(message.chat.id, user_name)
+    status = await add_user(message.chat.id, message.from_user.id, user_name)
     if status == 'already':
         await bot.send_message(message.chat.id, 'Так ты же уже играешь')
     else:
