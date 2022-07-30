@@ -26,8 +26,8 @@ async def add_user(chat_id, user_id, user_name):
     users[chat_id][user_id]= {user_name: 0}
     return 'new'
 
-async def update_user(chat_id, user_id):
-    users[chat_id][user_id]['user_name'] += 1
+async def update_user(chat_id, user_id, user_name):
+    users[chat_id][user_id][user_name] += 1
 
 async def random_user(chat_id):
     if chat_id not in list(users.keys()):
@@ -140,7 +140,7 @@ async def start(message: types.Message):
                 if rand == 3:
                     await bot.send_message(message.chat.id, 'Ща проанализирую. Логарифм хуе мое, делим... ага')
             await bot.send_message(message.chat.id, 'очкошник дня - @'+list(users[message.chat.id][user_id].keys())[0])
-            await update_user(message.chat.id, list(users[message.chat.id][user_id].keys())[0])
+            await update_user(message.chat.id, user_id, list(users[message.chat.id][user_id].keys())[0])
 
 #stats
 @dp.message_handler(commands=['stats'])
