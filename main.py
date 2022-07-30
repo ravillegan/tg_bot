@@ -77,7 +77,7 @@ async def start(message: types.Message):
 async def start(message: types.Message):
     if message.from_user.username == None and (message.from_user.first_name is not None and message.from_user.second_name is not None):
         user_id = message.from_user.first_name + ' ' + message.from_user.last_name
-    elif if message.from_user.username == None and (message.from_user.first_name is None and message.from_user.second_name is not None):
+    elif message.from_user.username == None and (message.from_user.first_name is None and message.from_user.second_name is not None):
         user_id = message.from_user.last_name
     elif message.from_user.username == None and (message.from_user.first_name is not None and message.from_user.second_name is None):
         user_id = message.from_user.first_name
