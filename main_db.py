@@ -56,7 +56,7 @@ async def set_ochko_day(chat_id, user_id):
     date_db = await day_ochko_collection.find_one({'chat_id': {'$eq': str(chat_id)}})
     print(date_db)
     if str(date_db['date']) == str(datetime.now().date()):
-        user_id_doc = await day_ochko_collection.find_one({'date': {'$eq': str(datetime.now().date())}})
+        user_id_doc = await day_ochko_collection.find_one({'chat_id': {'$eq': str(chat_id)}})
         user_id = user_id_doc['user_id']
         return user_id, 'already'
     await day_ochko_collection.update_one({'chat_id': str(chat_id), 'user_name' : user_id}, {'$set': {'date': str(datetime.now().date())}})
