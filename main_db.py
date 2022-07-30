@@ -33,7 +33,7 @@ async def add_user(chat_id, user_id, user_name):
 async def update_user(chat_id, user_id):
     info = await users_collection.find_one({'chat_id': str(chat_id), 'user_id': str(user_id)})
     new_score = info.score + 1
-    print(users_collection, new_score)
+    # print(users_collection, new_score)
 
 async def random_user(chat_id):
     if await users_collection.count_documents({'chat_id': {'$eq': str(chat_id)}}) == 0:
@@ -53,7 +53,7 @@ async def set_ochko_day(chat_id, user_id):
         await day_ochko_collection.insert_one({'chat_id': str(chat_id), 'date': str(datetime.now().date()), 'user_name' : user_id})
         return user_id, 'new'
     if await users_collection.find({'chat_id': {'$eq': str(chat_id)}}).date == str(datetime.now().date()):
-        user_id = users_collection.find({'user_id': {'$eq': str(user_id)}}).date
+        user_id = await users_collection.find({'user_id': {'$eq': str(user_id)}}).date
         return user_id, 'already'
     await day_ochko_collection.update_one({'chat_id': str(chat_id), 'user_name' : user_id}, {'$set': {'date': str(datetime.now().date())}})
     return user_id, 'new'
@@ -66,10 +66,10 @@ async def statistics(chat_id):
     if await users_collection.count_documents({'chat_id': {'$eq': str(chat_id)}}) == 0:
         return 'no_chat_id'
     stats_str = []
-    cursor = users_collection.find({'chat_id': {'$eq': str(chat_id)}}).sort('score', -1)
-    print(cursor, 'blyat')
+    cursor = await users_collection.find({'chat_id': str(chat_id)}).sort('score', -1)
+    print(cursor, 'blyat', str(chat_id))
     i = 0
-    for document in await cursor.to_list(length=10):
+    for document in await cursor.to_list(length=1000):
         stats_str += str(i+1)+ '. '+document.user_name
         stats_str += ': '
         stats_str += document.score
