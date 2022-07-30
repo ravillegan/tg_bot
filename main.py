@@ -79,14 +79,14 @@ async def start(message: types.Message):
         await bot.send_message(message.chat.id, 'Так ты же уже играешь')
     else:
         rand_reg = randint(0, 3)
-            if rand_reg == 0:
-                await bot.send_message(message.chat.id, 'Подумой не играй! Хотя ладно, твой выбор')
-            if rand_reg == 1:
-                await bot.send_message(message.chat.id, 'Ох. Ты ступил на скользкий путь, ну ладно, ты в игре')
-            if rand_reg == 2:
-                await bot.send_message(message.chat.id, 'Ты играешь с огнем, но мне пох, играй')
-            if rand_reg == 3:
-                await bot.send_message(message.chat.id, 'Обратного пути не будет, ты по любому станешь очкошником')
+        if rand_reg == 0:
+            await bot.send_message(message.chat.id, 'Подумой не играй! Хотя ладно, твой выбор')
+        if rand_reg == 1:
+            await bot.send_message(message.chat.id, 'Ох. Ты ступил на скользкий путь, ну ладно, ты в игре')
+        if rand_reg == 2:
+            await bot.send_message(message.chat.id, 'Ты играешь с огнем, но мне пох, играй')
+        if rand_reg == 3:
+            await bot.send_message(message.chat.id, 'Обратного пути не будет, ты по любому станешь очкошником')
 
 #kto
 @dp.message_handler(commands=['kto'])
@@ -97,7 +97,15 @@ async def start(message: types.Message):
     else:
         login, new_old = await set_ochko_day(message.chat.id, login)
         if new_old == 'already':
-            await bot.send_message(message.chat.id, 'Сегодня же уже выясняли... очкошник дня - @'+login)
+            rand_reg = randint(0, 3)
+            if rand_reg == 0:
+                await bot.send_message(message.chat.id, 'Читать не умеешь? Я же сегодня писал уже.')
+            if rand_reg == 1:
+                await bot.send_message(message.chat.id, 'Сегодня же уже выясняли... очкошник дня - @'+login)
+            if rand_reg == 2:
+                await bot.send_message(message.chat.id, 'Ну епта, выяснили же уже, что за очкошничество сегодня отвечает @'+login)
+            if rand_reg == 3:
+                await bot.send_message(message.chat.id, 'Мне не впадлу, я еще раз могу написать, что сегодняшний очкошник - @'+login)
         else:
             if message.from_user.username == login:
                 await bot.send_message(message.chat.id, 'Ты зачем спрашиваешь? Ты и есть очкошник сегодня')
