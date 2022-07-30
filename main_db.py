@@ -136,13 +136,13 @@ async def start(message: types.Message):
                     await bot.send_message(message.chat.id, 'О, нашел, тут кстати твое имя')
                     if user_name[0] == ' ':
                         # await bot.send_message(message.chat.id, 'Читаю: "очкошник дня - '+user_name[1:]+'"')
-                        await bot.send_message(message.chat.id,'Читаю: "очкошник дня \- ['+user_name[1:]+'](tg://user?id='+str(user_id_new)+')', parse_mode='MarkdownV2')
+                        await bot.send_message(message.chat.id,'Читаю: "очкошник дня \- ['+user_name[1:]+'](tg://user?id='+str(user_id_new)+')"', parse_mode='MarkdownV2')
                     else:
                         await bot.send_message(message.chat.id, 'Читаю: "очкошник дня - @'+user_name+'"')
                 else:
                     await bot.send_message(message.chat.id, 'Забыл? Ты и есть очкошник дня. На всякий случай еще раз')
                     if user_name[0] == ' ':
-                        await bot.send_message(message.chat.id, 'очкошник дня с признаками деменции - '+user_name[1:])
+                        await bot.send_message(message.chat.id, 'очкошник дня с признаками деменции \- ['+user_name[1:]+'](tg://user?id='+str(user_id_new)+')', parse_mode='MarkdownV2')
                     else:
                         await bot.send_message(message.chat.id, 'очкошник дня с признаками деменции - @'+user_name)
             else:
@@ -151,16 +151,19 @@ async def start(message: types.Message):
                     await bot.send_message(message.chat.id, 'Читать не умеешь? Я же сегодня писал уже.')
                 if rand_reg == 1:
                     if user_name[0] == ' ':
-                        await bot.send_message(message.chat.id, 'Сегодня же уже выясняли... очкошник дня - '+user_name[1:])
+                        await bot.send_message(message.chat.id, 'Сегодня же уже выясняли... очкошник дня \- ['+user_name[1:]+'](tg://user?id='+str(user_id_new)+')', parse_mode='MarkdownV2')
                     else:
                         await bot.send_message(message.chat.id, 'Сегодня же уже выясняли... очкошник дня - @'+user_name)
                 if rand_reg == 2:
                     if user_name[0] == ' ':
-                        await bot.send_message(message.chat.id, 'Ну епта, выяснили же уже, что за очкошничество сегодня отвечает '+user_name[1:])
+                        await bot.send_message(message.chat.id, 'Ну епта, выяснили же уже, что за очкошничество сегодня отвечает ['+user_name[1:]+'](tg://user?id='+str(user_id_new)+')', parse_mode='MarkdownV2')
                     else:
                         await bot.send_message(message.chat.id, 'Ну епта, выяснили же уже, что за очкошничество сегодня отвечает @'+user_name)
                 if rand_reg == 3:
-                    await bot.send_message(message.chat.id, 'Мне не впадлу, я еще раз могу написать, что сегодняшний очкошник - @'+user_name)
+                    if user_name[0] == ' ':
+                        await bot.send_message(message.chat.id, 'Мне не впадлу, я еще раз могу написать, что сегодняшний очкошник \- ['+user_name[1:]+'](tg://user?id='+str(user_id_new)+')', parse_mode='MarkdownV2')
+                    else:
+                        await bot.send_message(message.chat.id, 'Мне не впадлу, я еще раз могу написать, что сегодняшний очкошник - @'+user_name)
         else:
             if str(message.from_user.id) == user_id_new:
                 await bot.send_message(message.chat.id, 'Ну раз спросил, то ты очкошник сегодня')
@@ -175,7 +178,7 @@ async def start(message: types.Message):
                 if rand == 3:
                     await bot.send_message(message.chat.id, 'Ща проанализирую. Логарифм хуе мое, делим... ага')
             if user_name[0] == ' ':
-                await bot.send_message(message.chat.id, 'очкошник дня - '+user_name[1:])
+                await bot.send_message(message.chat.id, 'очкошник дня \- ['+user_name[1:]+'](tg://user?id='+str(user_id_new)+')', parse_mode='MarkdownV2')
             else:
                 await bot.send_message(message.chat.id, 'очкошник дня - @'+user_name)
             await update_user(message.chat.id, user_id_new)
