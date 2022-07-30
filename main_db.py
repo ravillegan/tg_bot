@@ -44,6 +44,7 @@ async def random_user(chat_id):
     tmp = []
     for document in await cursor.to_list(length=1000):
         tmp.append(document['user_id'])
+        print('blya', tmp)
     random.shuffle(tmp)
     user_id = tmp[0]
     return user_id
