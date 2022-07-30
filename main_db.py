@@ -135,7 +135,8 @@ async def start(message: types.Message):
                     await bot.send_message(message.chat.id, 'У меня где то была бумажка за сегодня')
                     await bot.send_message(message.chat.id, 'О, нашел, тут кстати твое имя')
                     if user_name[0] == ' ':
-                        await bot.send_message(message.chat.id, 'Читаю: "очкошник дня - '+user_name[1:]+'"')
+                        # await bot.send_message(message.chat.id, 'Читаю: "очкошник дня - '+user_name[1:]+'"')
+                        await bot.send_message(message.chat.id,'['+user_name[1]+'](tg://user?id='+str(user_id_new)+')')
                     else:
                         await bot.send_message(message.chat.id, 'Читаю: "очкошник дня - @'+user_name+'"')
                 else:
