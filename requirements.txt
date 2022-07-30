@@ -6,3 +6,4 @@ motor
 path
 pathlib2
 pymorphy2
+dnspython
