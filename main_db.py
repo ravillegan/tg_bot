@@ -78,7 +78,7 @@ async def statistics(chat_id):
         stats_str += '\n'
         i+=1
     return stats_str
-
+ 
 async def user_info(user_info_json):
     if hasattr(user_info_json, 'username') and user_info_json.username is not None:
         user_id = user_info_json.username
