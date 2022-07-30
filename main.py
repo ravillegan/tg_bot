@@ -17,7 +17,7 @@ day_ochko_collection = cluster.ochkoshniki.ochkoshniki_users
 
 HEROKU_APP_NAME = os.getenv('HEROKU_APP_NAME')
 
-users = {}
+users = {} 
 in_day_ochko = {}
 
 async def add_user(chat_id, user_id, user_name):
