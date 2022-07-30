@@ -1,14 +1,9 @@
 aiogram
-argh
 asn1crypto
-astropy
 asyncio
-autopep8
-backports.shutil-get-terminal-size
 bitarray
 bkcharts
 bokeh
-boto
 bottleneck
 brotlipy
 colorama
@@ -37,7 +32,6 @@ more-itertools
 motor
 multipledispatch
 mypy-extensions
-navigator-updater
 nltk
 nose
 numba
