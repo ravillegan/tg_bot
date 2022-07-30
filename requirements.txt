@@ -28,7 +28,6 @@ html5lib
 importlib-metadata
 install
 jdcal
-klecks-module
 lxml
 mkl-fft
 mkl-random
