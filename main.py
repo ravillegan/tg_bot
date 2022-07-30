@@ -6,6 +6,7 @@ import random
 import logging
 import os
 from random import randint
+import pprint
 
 TOKEN = os.getenv('BOT_TOKEN')
 bot = Bot(token=TOKEN)
@@ -26,12 +27,10 @@ async def add_user(chat_id, user_id, user_name):
             return 'already'
     if chat_id not in list(users.keys()):
         users[chat_id] = {user_id: {user_name: 0}}
-        users_collection.insert_one({'chat_id': str(chat_id), 'user_id': str(user_id), 'useer_name' : user_name, 'score': 0})
-        print(users_collection)
+        await users_collection.insert_one({'chat_id': str(chat_id), 'user_id': str(user_id), 'useer_name' : user_name, 'score': 0})
         return 'new'
     users[chat_id][user_id]= {user_name: 0}
-    # users_collection.find({'': {'$lt': 1}})
-    users_collection.insert_one({'chat_id': str(chat_id), 'user_id': str(user_id), 'useer_name' : user_name, 'score': 0})
+    await users_collection.insert_one({'chat_id': str(chat_id), 'user_id': str(user_id), 'useer_name' : user_name, 'score': 0})
     print(users_collection)
     return 'new'
 
@@ -77,6 +76,10 @@ async def statistics(chat_id):
         stats_str += ': '
         stats_str += str(new_tuple[i][1])
         stats_str += '\n'
+    cursor = users_collection.find({'chat_id': {'$eq': chat_id}}).sort('score')
+    print(cursor)
+    for document in await cursor.to_list():
+        pprint.pprint(document)
     return stats_str
 
 async def user_info(user_info_json):
