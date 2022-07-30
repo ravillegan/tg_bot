@@ -60,7 +60,7 @@ async def statistics(chat_id):
         array.append(list(list_of_tuples[i][1].items()))
     flat_list = [item for sublist in array for item in sublist]
     print(flat_list)
-    new_tuple = Sort_Tuple(flat_list)
+    new_tuple = await Sort_Tuple(flat_list)
     print(new_tuple)
     stats_str = ''
     for i in range(len(new_tuple)):
