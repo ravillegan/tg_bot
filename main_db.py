@@ -123,7 +123,7 @@ async def start(message: types.Message):
         if rand_reg == 3:
             await bot.send_message(message.chat.id, 'Обратного пути не будет, ты по любому станешь очкошником')
 
-#kto
+#kto 
 @dp.message_handler(commands=['kto'])
 async def start(message: types.Message):
     user_id = await random_user(message.chat.id)
