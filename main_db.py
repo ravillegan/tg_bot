@@ -54,8 +54,8 @@ async def set_ochko_day(chat_id, user_id):
     date_db = await day_ochko_collection.find_one({'chat_id': {'$eq': str(chat_id)}})
     if str(date_db['date']) == str(datetime.now().date()):
         user_id_doc = await day_ochko_collection.find_one({'chat_id': {'$eq': str(chat_id)}})
-        user_id = user_id_doc['user_id']
-        return user_id, 'already'
+        user_id_old = user_id_doc['user_id']
+        return user_id_old, 'already'
     await day_ochko_collection.update_one({'chat_id': str(chat_id)}, {'$set': {'user_id' : user_id, 'date': str(datetime.now().date())}})
     return user_id, 'new'
 
@@ -121,12 +121,12 @@ async def start(message: types.Message):
     if user_id == 'no_one':
         await bot.send_message(message.chat.id, 'Никто из вас еще не играет(( Хочешь играть - зарегайся /reg')
     else:
-        user_id, new_old = await set_ochko_day(message.chat.id, user_id)
-        user_name_doc = await users_collection.find_one({'chat_id': {'$eq': str(message.chat.id)}, 'user_id': {'$eq': str(user_id)}})
+        user_id_new, new_old = await set_ochko_day(message.chat.id, user_id)
+        user_name_doc = await users_collection.find_one({'chat_id': {'$eq': str(message.chat.id)}, 'user_id': {'$eq': str(user_id_new)}})
         user_name = user_name_doc['user_name']
         if new_old == 'already':
-            print(user_id, message.from_user.id, 'vot_tut')
-            if str(message.from_user.id == user_id):
+            print(message.from_user.id, user_id_new, 'vot_tut')
+            if str(message.from_user.id == user_id_new):
                 rand_reg = randint(0, 1)
                 if rand_reg == 0:
                     await bot.send_message(message.chat.id, 'У меня где то была бумажка за сегодня')
@@ -146,7 +146,7 @@ async def start(message: types.Message):
                 if rand_reg == 3:
                     await bot.send_message(message.chat.id, 'Мне не впадлу, я еще раз могу написать, что сегодняшний очкошник - @'+user_name)
         else:
-            if str(message.from_user.id) == user_id:
+            if str(message.from_user.id) == user_id_new:
                 await bot.send_message(message.chat.id, 'Ну раз спросил, то ты очкошник сегодня')
             else:
                 rand = randint(0, 3)
@@ -159,7 +159,7 @@ async def start(message: types.Message):
                 if rand == 3:
                     await bot.send_message(message.chat.id, 'Ща проанализирую. Логарифм хуе мое, делим... ага')
             await bot.send_message(message.chat.id, 'очкошник дня - @'+user_name)
-            await update_user(message.chat.id, user_id)
+            await update_user(message.chat.id, user_id_new)
 
 #stats
 @dp.message_handler(commands=['stats'])
