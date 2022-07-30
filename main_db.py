@@ -192,6 +192,14 @@ async def start(message: types.Message):
     else:
         await bot.send_message(message.chat.id, 'Топ очкошников: \n \n'+ status_stats)
 
+#help
+@dp.message_handler(commands=['help'])
+async def start(message: types.Message):
+    await bot.send_message(message.chat.id, 'Ну раз, ты спрашиваешь, я расскажу, зачем я нужен')
+    await bot.send_message(message.chat.id, 'Часто бывает ситуация, когда нужно узнать очкошника дня, а еще и иметь статистику под рукой')
+    await bot.send_message(message.chat.id, 'Я здесь как раз для этого')
+    await bot.send_message(message.chat.id, 'Нажми /reg, чтобы зарегистрироваться\nТыкни /kto, чтобы определить очкошника дня\nЖмакни /stats, чтобы увидеть статистику очкошничества')
+
 #secret
 @dp.message_handler(commands=['secret'])
 async def start(message: types.Message):
