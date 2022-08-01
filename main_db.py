@@ -97,13 +97,13 @@ async def user_info(user_info_json):
 #start
 @dp.message_handler(commands=['start'])
 async def start(message: types.Message):
-    print('start', message.from_user.username if message.from_user.id is not None else message.from_user.id)
+    print('start', message.from_user.username if message.from_user.username is not None else message.from_user.id)
     await bot.send_message(message.chat.id, 'Ну и зря вы это начали... Ну ладно, поиграем в очкошника')
 
 #reg
 @dp.message_handler(commands=['reg'])
 async def start(message: types.Message):
-    print('reg', message.from_user.username if message.from_user.id is not None else message.from_user.id)
+    print('reg', message.from_user.username if message.from_user.username is not None else message.from_user.id)
     user_name = await user_info(message.from_user)
     status = await add_user(message.chat.id, message.from_user.id, user_name)
     if status == 'already':
@@ -122,7 +122,7 @@ async def start(message: types.Message):
 #kto 
 @dp.message_handler(commands=['kto'])
 async def start(message: types.Message):
-    print('kto', message.from_user.username if message.from_user.id is not None else message.from_user.id)
+    print('kto', message.from_user.username if message.from_user.username is not None else message.from_user.id)
     user_id = await random_user(message.chat.id)
     if user_id == 'no_one':
         await bot.send_message(message.chat.id, 'Никто из вас еще не играет(( Хочешь играть - зарегайся /reg')
@@ -189,7 +189,7 @@ async def start(message: types.Message):
 #stats
 @dp.message_handler(commands=['stats'])
 async def start(message: types.Message):
-    print('stats', message.from_user.username if message.from_user.id is not None else message.from_user.id)
+    print('stats', message.from_user.username if message.from_user.username is not None else message.from_user.id)
     status_stats = await statistics(message.chat.id)
     if status_stats == 'no_chat_id':
         await bot.send_message(message.chat.id, 'Ни одной игры не было')
@@ -199,7 +199,7 @@ async def start(message: types.Message):
 #help
 @dp.message_handler(commands=['help'])
 async def start(message: types.Message):
-    print('help', message.from_user.username if message.from_user.id is not None else message.from_user.id)
+    print('help', message.from_user.username if message.from_user.username is not None else message.from_user.id)
     await bot.send_message(message.chat.id, 'Ну раз ты спрашиваешь, я расскажу, зачем я нужен')
     await bot.send_message(message.chat.id, 'Часто бывает ситуация, когда нужно узнать очкошника дня, а еще и иметь статистику под рукой')
     await bot.send_message(message.chat.id, 'Я здесь как раз для этого')
