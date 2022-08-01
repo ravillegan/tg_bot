@@ -188,8 +188,8 @@ async def start(message: types.Message):
 
 #stats
 @dp.message_handler(commands=['stats'])
-print('stats', message.from_user.username if message.from_user.id is not None else message.from_user.id)
 async def start(message: types.Message):
+    print('stats', message.from_user.username if message.from_user.id is not None else message.from_user.id)
     status_stats = await statistics(message.chat.id)
     if status_stats == 'no_chat_id':
         await bot.send_message(message.chat.id, 'Ни одной игры не было')
@@ -198,8 +198,8 @@ async def start(message: types.Message):
 
 #help
 @dp.message_handler(commands=['help'])
-print('help', message.from_user.username if message.from_user.id is not None else message.from_user.id)
 async def start(message: types.Message):
+    print('help', message.from_user.username if message.from_user.id is not None else message.from_user.id)
     await bot.send_message(message.chat.id, 'Ну раз ты спрашиваешь, я расскажу, зачем я нужен')
     await bot.send_message(message.chat.id, 'Часто бывает ситуация, когда нужно узнать очкошника дня, а еще и иметь статистику под рукой')
     await bot.send_message(message.chat.id, 'Я здесь как раз для этого')
