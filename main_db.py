@@ -44,7 +44,7 @@ async def random_user(chat_id):
     random.shuffle(tmp)
     user_id = tmp[0]
     return user_id
-
+ 
 
 async def set_ochko_day(chat_id, user_id):
     if await day_ochko_collection.count_documents({'chat_id': {'$eq': str(chat_id)}}) == 0:
