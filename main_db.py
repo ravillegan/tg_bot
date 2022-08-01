@@ -142,9 +142,9 @@ async def start(message: types.Message):
                 else:
                     await bot.send_message(message.chat.id, 'Забыл? Ты и есть очкошник дня. На всякий случай еще раз')
                     if user_name[0] == ' ':
-                        await bot.send_message(message.chat.id, 'очкошник дня с признаками деменции \- ['+user_name[1:]+'](tg://user?id='+str(user_id_new)+')', parse_mode='MarkdownV2')
+                        await bot.send_message(message.chat.id, 'очкошник дня с признаками склероза \- ['+user_name[1:]+'](tg://user?id='+str(user_id_new)+')', parse_mode='MarkdownV2')
                     else:
-                        await bot.send_message(message.chat.id, 'очкошник дня с признаками деменции - @'+user_name)
+                        await bot.send_message(message.chat.id, 'очкошник дня с признаками склероза - @'+user_name)
             else:
                 rand_reg = randint(0, 3)
                 if rand_reg == 0:
